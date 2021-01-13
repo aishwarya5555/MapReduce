@@ -1,0 +1,9 @@
+ 1. Copy a file( Say abc.txt) from local filesystem to a folder in the HDFS
+    hdfs dfs -copyFromLocal  /mnt/home/edureka_1142691/input/abc.txt /user/edureka_1142691/source
+2. Delete that file from hdfs
+    hdfs dfs -rm /user/edureka_1142691/source/abc.txt
+3. Find the deleted file on hdfs
+   Moved: 'hdfs://nameservice1/user/edureka_1142691/source/abc.txt' to trash at: hdfs://nameservice1/user/edureka_1142691/.Trash/Current/user
+			/edureka_1142691/source/abc.txt
+4. Restore the deleted file to its previous location.
+	hdfs dfs -cp /user/edureka_1142691/.Trash/Current/user/edureka_1142691/source/abc.txt /user/edureka_1142691/source

@@ -1,0 +1,23 @@
+ Q22 : Due to technical reason, one of the datanode goes down in the cluster, which leads to insufficient space to store any further files in HDFS. Now, your task is to create some temporary space to store data from running jobs. You can refer the following steps to achieve this.
+
+1. Find the HDFS directory containing huge data based on their size
+	hdfs dfs -du  /user/edureka_1142691 | sort -n -r | head -n 1
+	hdfs dfs -du  /user/edureka_1142691/delete_empty_1 | sort -n -r | head -n 2
+
+2. Find 2 largest files from this directory on HDFS and take a local copy of these files in your cloud lab
+	hdfs dfs -copyToLocal /user/edureka_1142691/delete_empty_1/file9.csv /mnt/home/edureka_1142691/input
+	hdfs dfs -copyToLocal /user/edureka_1142691/delete_empty_1/file6.csv /mnt/home/edureka_1142691/input
+
+3.Compress these files to bzip2 format
+	bzip2 file9.csv
+	bzip2 file6.csv
+	
+4. Remove these files from HDFS and
+	hdfs dfs -rm /user/edureka_1142691/delete_empty_1/file9.csv
+	hdfs dfs -rm /user/edureka_1142691/delete_empty_1/file6.csv
+	
+5. Copy the compressed files to bzip2 by setting the replication factor as 1
+   hdfs dfs -Ddfs.replication=1 -copyFromLocal file9.csv.bz2 /user/edureka_1142691/delete_empty_1
+   hdfs dfs -Ddfs.replication=1 -copyFromLocal file6.csv.bz2 /user/edureka_1142691/delete_empty_1 
+
+ 
